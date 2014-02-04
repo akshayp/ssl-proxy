@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+green='\033[1;32m'
+yellow='\033[1;33m'
+nocolor='\033[0m'
+
+function log() {
+    echo -e "\n${green}${@}${nocolor}"
+}
+
+function warning() {
+    echo -e "\n⇏ ${yellow}${@}${nocolor}"
+}
+
+log "Creating ~/.ssl directory to store keys..."
+mkdir -p ~/.ssl
+cd ~/.ssl
+
+log "Generate SSL Password keys..."
+openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+openssl rsa -passin pass:x -in server.pass.key -out server.key
+
+log "Cleanup password key..."
+rm server.pass.key
+
+warning "Ensure you enter the domain which will be serving securely for the 'Common Name' option. eg: dev.yahoo.com, *.dev.yahoo.com"
+openssl req -new -key server.key -out server.csr
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+log "Add cert to Keychain..."
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain server.crt
+
+log "Opening Cert file..."
+warning "Make sure you you double click the cert listed under the domain you picked above, Click the Trust section and pick 'Always Trust'"
+open ~/.ssl/server.crt
