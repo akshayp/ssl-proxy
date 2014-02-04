@@ -12,6 +12,14 @@ function warning() {
     echo -e "\n⇏ ${yellow}${@}${nocolor}"
 }
 
+if [ -d ~/.ssl ]; then
+    warning "~/.ssl Directory already exists"
+    if [ -f ~/.ssl/server.crt ]; then
+        warning "~/.ssl/server.crt already exists. Exiting!"
+        exit
+    fi
+fi
+
 log "Creating ~/.ssl directory to store keys..."
 mkdir -p ~/.ssl
 cd ~/.ssl
