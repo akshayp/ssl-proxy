@@ -2,10 +2,10 @@
     "name": "ssl-proxy",
     "description": "Simple SSL Proxy",
     "version": "0.0.1",
-    "author": "Akshay Patel <akshayp@yahoo-inc.com>",
+    "author": "Akshay Patel <akshayrpatel@gmail.com>",
     "repository": {
         "type": "git",
-        "url": "git@git.corp.yahoo.com:akshayp/ssl-proxy.git"
+        "url": "git@github.com:akshayp/ssl-proxy.git"
     },
     "license": "BSD-2-Clause",
     "private": true,
@@ -13,7 +13,6 @@
     "main": "./bin/ysproxy.js",
     "scripts": {
         "start": "node index",
-        "lint": "./node_modules/yhint/bin/yhint",
         "postinstall" : "bin/gen-cert"
     },
     "bin": {
@@ -22,19 +21,5 @@
     "dependencies": {
         "nopt": "~2.1.2",
         "http-proxy": "~1.0.2"
-    },
-    "devDependencies": {
-        "istanbul": "~0.1.42",
-        "yhint": "0.0.x"
-    },
-    "yahoo": {
-        "bugzilla": {
-            "product": "Sports",
-            "component": "Engineering Infrastructure"
-        }
-    },
-    "yhint": {
-        "node": true,
-        "json": true
     }
 }
